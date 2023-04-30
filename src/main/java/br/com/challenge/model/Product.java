@@ -5,8 +5,8 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 
 @Entity
-@Table(name = "produtos")
-public class Produto {
+@Table(name = "products")
+public class Product {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -15,14 +15,14 @@ public class Produto {
     private String description;
     private BigDecimal value;
     private LocalDate createdAt = LocalDate.now();
-    @Enumerated(EnumType.STRING)
-    private Categoria category;
+    @ManyToOne
+    @JoinColumn(name = "category_id")
+    private Category category;
 
-    public  Produto (String name, String description, BigDecimal value, Categoria category) {
+    public Product(String name, String description, BigDecimal value) {
         this.name = name;
         this.description = description;
         this.value = value;
-        this.category = category;
     }
 
     public Long getId() {
@@ -60,11 +60,11 @@ public class Produto {
         this.createdAt = createdAt;
     }
 
-    public Categoria getCategory() {
+    public Category getCategory() {
         return category;
     }
 
-    public void setCategory(Categoria category) {
+    public void setCategory(Category category) {
         this.category = category;
     }
 }
