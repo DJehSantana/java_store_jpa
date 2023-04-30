@@ -6,20 +6,34 @@ import br.com.challenge.util.FactoryUtil;
 
 import javax.persistence.EntityManager;
 import java.math.BigDecimal;
+import java.util.List;
 
 public class TestCreate {
     public static void main(String[] args) {
-        Category category = new Category("Smartphones");
-        Product product = new Product("Smartphone Xiomi", "Redmi 9", new BigDecimal("986.90"));
-        product.setCategory(category);
+       //createProduct();
+
+       EntityManager em = FactoryUtil.getEntityManager();
+       ProductDao productDao = new ProductDao(em);
+
+       List <Product> products = productDao.findAll();
+       products.forEach(p -> System.out.println(p.getName()));
+
+       CategoryDao categoryDao = new CategoryDao(em);
+       Category category = categoryDao.findById(1l);
+
+       System.out.println(category.getName() + " - Produtos: " + category.getProducts());
+
+    }
+
+    public static void createProduct() {
         EntityManager em = FactoryUtil.getEntityManager();
+        Category category = em.find(Category.class, 2l);
+        Product product = new Product("Poco F3", "Smartphone Xiomi", new BigDecimal("1275.90"));
+        product.setCategory(category);
 
         ProductDao productDao = new ProductDao(em);
-        CategoryDao categoryDao = new CategoryDao(em);
-
         //realizando transação manualmente
         em.getTransaction().begin();
-        categoryDao.create(category);
         productDao.create(product);
         em.getTransaction().commit();
         em.close();

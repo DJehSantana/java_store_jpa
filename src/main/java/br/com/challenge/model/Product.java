@@ -15,10 +15,13 @@ public class Product {
     private String description;
     private BigDecimal value;
     private LocalDate createdAt = LocalDate.now();
-    @ManyToOne
+    @ManyToOne()
     @JoinColumn(name = "category_id")
     private Category category;
 
+    public Product() {
+
+    }
     public Product(String name, String description, BigDecimal value) {
         this.name = name;
         this.description = description;
@@ -66,5 +69,14 @@ public class Product {
 
     public void setCategory(Category category) {
         this.category = category;
+    }
+
+    @Override
+    public String toString() {
+        return "Product{" +
+                "name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                ", value=" + value +
+                '}';
     }
 }
