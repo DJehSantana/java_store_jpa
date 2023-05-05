@@ -10,7 +10,7 @@ import java.util.List;
 
 public class TestCreate {
     public static void main(String[] args) {
-       //createProduct();
+       createProduct();
 
        EntityManager em = FactoryUtil.getEntityManager();
        ProductDao productDao = new ProductDao(em);
@@ -27,7 +27,12 @@ public class TestCreate {
 
     public static void createProduct() {
         EntityManager em = FactoryUtil.getEntityManager();
-        Category category = em.find(Category.class, 2l);
+        Category category = em.find(Category.class, 1l);
+
+        if (category == null) {
+            category = createCategory();
+        }
+
         Product product = new Product("Poco F3", "Smartphone Xiomi", new BigDecimal("1275.90"));
         product.setCategory(category);
 
@@ -37,5 +42,21 @@ public class TestCreate {
         productDao.create(product);
         em.getTransaction().commit();
         em.close();
+    }
+
+    public static Category createCategory () {
+        EntityManager em = FactoryUtil.getEntityManager();
+        Category category = new Category("others");
+
+        CategoryDao categoryDao = new CategoryDao(em);
+        em.getTransaction().begin();
+        categoryDao.create(category);
+        em.getTransaction().commit();
+        category = em.find(Category.class, 1l);
+        em.close();
+
+
+
+        return category;
     }
 }

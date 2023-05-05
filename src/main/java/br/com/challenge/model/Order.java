@@ -3,6 +3,8 @@ package br.com.challenge.model;
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "orders")
@@ -12,15 +14,25 @@ public class Order {
     private Long id;
 
     private BigDecimal value;
-    private LocalDate createdAt;
-    private Long client_id;
+    private LocalDate createdAt = LocalDate.now();
+
+    @ManyToOne
+    private Client client;
+
+    @OneToMany(mappedBy = "order")
+    private List<OrderItens> itens = new ArrayList<>();
+
 
     public Order() {}
 
-    public Order(BigDecimal value, LocalDate createdAt, Long client_id) {
-        this.value = value;
-        this.createdAt = createdAt;
-        this.client_id = client_id;
+    public Order(Client client ) {
+        this.client = client;
+    }
+
+    //recebe o item e
+    public void setItens(OrderItens item) {
+        item.setOrder(this);
+        this.itens.add(item);
     }
 
     public Long getId() {
@@ -43,11 +55,11 @@ public class Order {
         this.createdAt = createdAt;
     }
 
-    public Long getClient_id() {
-        return client_id;
+    public Client getClient() {
+        return client;
     }
 
-    public void setClient_id(Long client_id) {
-        this.client_id = client_id;
+    public void setClient(Client client) {
+        this.client = client;
     }
 }
