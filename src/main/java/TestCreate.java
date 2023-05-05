@@ -15,7 +15,7 @@ public class TestCreate {
        EntityManager em = FactoryUtil.getEntityManager();
        ProductDao productDao = new ProductDao(em);
 
-       List <Product> products = productDao.findAll();
+       List <Product> products = productDao.findByCategory("Smartphones");
        products.forEach(p -> System.out.println(p.getName()));
 
        CategoryDao categoryDao = new CategoryDao(em);
