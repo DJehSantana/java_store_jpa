@@ -37,4 +37,12 @@ public class Client {
     public void setCpf(String cpf) {
         this.cpf = cpf;
     }
+
+    @Override
+    public String toString() {
+        return "Client{" +
+                "name='" + name + '\'' +
+                ", cpf='" + cpf + '\'' +
+                '}';
+    }
 }

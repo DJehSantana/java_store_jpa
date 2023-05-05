@@ -20,9 +20,13 @@ public class GenericDao<T, ID extends Serializable> {
         return em.find(entityClass, id);
     }
 
-    public List<T> findAll(T entity) {
-        String jpql = "SELECT e from :entity e";
-        return em.createQuery(jpql, entityClass).setParameter("entity", entity).getResultList();
+    public List<T> findAll(String jpql) {
+        return em.createQuery(jpql, entityClass).getResultList();
+    }
+
+    public void delete(ID id) {
+        T entity = em.find(entityClass, id);
+        em.remove(entity);
     }
 
 }

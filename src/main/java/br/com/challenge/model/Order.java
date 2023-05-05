@@ -19,7 +19,7 @@ public class Order {
     @ManyToOne
     private Client client;
 
-    @OneToMany(mappedBy = "order")
+    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
     private List<OrderItens> itens = new ArrayList<>();
 
 
@@ -61,5 +61,15 @@ public class Order {
 
     public void setClient(Client client) {
         this.client = client;
+    }
+
+    @Override
+    public String toString() {
+        return "Order{" +
+                "value=" + value +
+                ", createdAt=" + createdAt +
+                ", client=" + client +
+                ", itens=" + itens +
+                '}';
     }
 }
