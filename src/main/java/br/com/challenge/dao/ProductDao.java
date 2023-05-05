@@ -3,26 +3,16 @@ package br.com.challenge.dao;
 import br.com.challenge.model.Product;
 
 import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import java.io.Serializable;
 import java.util.List;
 
-public class ProductDao {
-
+public class ProductDao extends GenericDao<Product, Long>{
+    @PersistenceContext
     private EntityManager em;
-
-    public ProductDao(EntityManager em) {
+    public ProductDao(EntityManager em, Class<Product> entityClass) {
+        super(em, entityClass);
         this.em = em;
-    }
-    public void create(Product product) {
-        this.em.persist(product);
-    }
-
-    public Product findById(Long id) {
-        return em.find(Product.class, id);
-    }
-
-    public List<Product> findAll() {
-        String jpql = "SELECT p from Product p";
-        return em.createQuery(jpql).getResultList();
     }
 
     public Product findByName(String name) {

@@ -11,7 +11,7 @@ public class Client {
     private String name;
     private String cpf;
 
-    public Client () {}
+    public Client() {}
 
     public Client(String name, String cpf) {
         this.name = name;
